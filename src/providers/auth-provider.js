@@ -4,6 +4,7 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   signOut,
+  updateProfile,
 } from "firebase/auth";
 let AuthContext = createContext(null);
 export function AuthProvider({ children }) {
@@ -31,13 +32,18 @@ export function AuthProvider({ children }) {
     );
   };
 
-  let createUser = async (user, callback) => {
-    return createUserWithEmailAndPassword(auth, user.email, user.password).then(
-      () => {
-        setUser(user);
+  let createUser = async (newUser, callback) => {
+    return createUserWithEmailAndPassword(
+      auth,
+      newUser.email,
+      newUser.password,
+    ).then((userCredential) => {
+      const user = userCredential.user;
+      updateProfile(user, { displayName: newUser.name }).then(() => {
+        setUser({ ...user, displayName: newUser.name });
         callback();
-      },
-    );
+      });
+    });
   };
 
   let logout = (callback) => {

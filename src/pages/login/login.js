@@ -21,8 +21,8 @@ const Login = () => {
     });
   };
 
-  const handleRegister = (email, password) => {
-    createUser({ email, password }, () => {
+  const handleRegister = (email, password, name) => {
+    createUser({ email, password, name }, () => {
       redirectToHome();
     }).catch((e) => {
       setError(e.message);

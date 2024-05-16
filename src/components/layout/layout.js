@@ -6,7 +6,7 @@ import useAuth from "../../hooks/useAuth";
 const { Header, Footer, Content } = AntdLayout;
 
 const Layout = () => {
-  const { logout } = useAuth();
+  const { logout, user } = useAuth();
 
   const handleLogout = () => {
     logout(() => {
@@ -15,8 +15,8 @@ const Layout = () => {
   };
   return (
     <AntdLayout>
-      <Header>
-        {" "}
+      <Header style={{ color: "white" }}>
+        hello {user?.displayName}
         <button onClick={handleLogout}>logout</button>
       </Header>
       <Content>
