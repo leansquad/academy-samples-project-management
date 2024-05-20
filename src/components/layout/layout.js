@@ -19,10 +19,10 @@ const Layout = () => {
         hello {user?.displayName}
         <button onClick={handleLogout}>logout</button>
       </Header>
-      <Content>
+      <Content className={styles.content}>
         <Outlet />
       </Content>
-      <Footer>Footer</Footer>
+      <Footer className={styles.footer}>Leansquad 2024</Footer>
     </AntdLayout>
   );
 };

@@ -1,15 +1,20 @@
 import useAuth from "../../hooks/useAuth";
-import { Navigate, useLocation } from "react-router-dom";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
+import { routes } from "../../app";
 
-function RequireAuth({ children }) {
+function RequireAuth() {
   let auth = useAuth();
   let location = useLocation();
 
-  if (!auth.user && !auth.isLoading) {
-    return <Navigate to="/login" state={{ from: location }} replace />;
+  if (auth.isLoading) {
+    return <div>Loading...</div>;
   }
 
-  return children;
+  if (!auth.user && !auth.isLoading) {
+    return <Navigate to={routes.login} state={{ from: location }} replace />;
+  }
+
+  return <Outlet />;
 }
 
 export default RequireAuth;

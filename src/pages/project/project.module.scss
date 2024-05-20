@@ -1,0 +1,15 @@
+.wrapper {
+  padding: 20px;
+
+  .addTask {
+    margin: 0 auto;
+    width: 500px;
+  }
+  .taskslist {
+    width: 700px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px
+  }
+}
