@@ -1,7 +1,8 @@
 import React from "react";
-import { Layout as AntdLayout } from "antd";
+import { Button, Layout as AntdLayout } from "antd";
 import { Outlet } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
+import styles from "./layout.module.scss";
 
 const { Header, Footer, Content } = AntdLayout;
 
@@ -14,10 +15,16 @@ const Layout = () => {
     });
   };
   return (
-    <AntdLayout>
-      <Header style={{ color: "white" }}>
-        hello {user?.displayName}
-        <button onClick={handleLogout}>logout</button>
+    <AntdLayout className={styles.wrapper}>
+      <Header className={styles.header}>
+        {user && (
+          <>
+            Hello {user?.displayName}
+            <Button type={"primary"} onClick={handleLogout}>
+              logout
+            </Button>
+          </>
+        )}
       </Header>
       <Content className={styles.content}>
         <Outlet />
