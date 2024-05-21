@@ -81,3 +81,15 @@ export const addTaskToProject = async ({ projectId, task }) => {
 
   return await getTasksByProjectId(projectId);
 };
+
+export const editProjectTask = async ({ projectId, task }) => {
+  const tasksRef = doc(firestoreDB, "tasks", task.id);
+  await setDoc(tasksRef, { ...task }, { merge: true });
+  return await getTasksByProjectId(projectId);
+};
+
+export const removeTaskFromProject = async ({ projectId, taskId }) => {
+  const tasksRef = doc(firestoreDB, "tasks", taskId);
+  await deleteDoc(tasksRef);
+  return await getTasksByProjectId(projectId);
+};

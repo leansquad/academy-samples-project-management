@@ -5,8 +5,10 @@ import { useNavigate, useParams } from "react-router-dom";
 import { routes } from "../../app";
 import {
   addTaskToProject,
+  editProjectTask,
   getProjectById,
   getTasksByProjectId,
+  removeTaskFromProject,
 } from "../../api/projects";
 import AddNewItem from "../../components/add-new-project/add-new-item";
 import TaskCard from "../../components/task-card/task-card";
@@ -40,6 +42,18 @@ const Project = () => {
     setTasks(UpdatedTasks);
   };
 
+  const onUpdateTask = async (task) => {
+    const newTasks = await editProjectTask({
+      projectId,
+      task: { ...task },
+    });
+    setTasks(newTasks);
+  };
+
+  const onRemoveTask = async ({ id }) => {
+    const newTasks = await removeTaskFromProject({ projectId, taskId: id });
+    setTasks(newTasks);
+  };
   const fetchProjectTasks = async () => {
     const newTasks = await getTasksByProjectId(projectId);
     setTasks(newTasks);
@@ -67,7 +81,12 @@ const Project = () => {
         {tasks
           ?.sort((a, b) => b.created_at - a.created_at)
           ?.map((task) => (
-            <TaskCard task={task} />
+            <TaskCard
+              key={task.id}
+              task={task}
+              onRemove={onRemoveTask}
+              onUpdate={onUpdateTask}
+            />
           ))}
       </div>
     </div>
